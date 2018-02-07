@@ -103,9 +103,12 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
      */
     public function getButtonHTML()
     {
+        $classes = $this->getButtonClasses();
+        $classes = str_replace('readonly', '', $classes);
+
         return sprintf(
-            '<a class="%s" href="%s" %s>%s</a>',
-            $this->getButtonClasses(),
+            '<a class="%s" href="%s" %s><span class="btn__title">%s</span></a>',
+            $classes,
             $this->getButtonLink(),
             // Prevent outputting the 'class' attribute twice by excluding it from other attributes
             $this->getAttributesHTML('class'),
@@ -124,7 +127,7 @@ class BetterButtonAction extends LiteralField implements BetterButtonInterface
         if ($this->isGrouped()) {
             return $classes; //Do not return the below additional classes
         }
-        $classes .= ' btn btn-default ss-ui-button';
+        $classes .= ' btn btn-default';
         if ($this->getAttribute('target') != '_blank') {
             // Only add this class if this link is targeted inside the CMS. Any links targeted to a new browser
             // window/tab should not have this as the CMS JavaScript would hook to the 'onclick' event and load the
